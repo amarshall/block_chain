@@ -5,16 +5,16 @@ class BlockChain
     @procs = methods.map(&:to_proc)
   end
 
-  def call
+  def call *args
     if @procs.none?
       yield
     elsif @procs.one?
-      @procs.first.call { yield }
+      @procs.first.call(*args) { yield }
     else
       current = @procs.first
       nexts = self.class.new(*@procs.slice(1..-1))
-      current.call do
-        nexts.call { yield }
+      current.call(*args) do
+        nexts.call(*args) { yield }
       end
     end
   end
