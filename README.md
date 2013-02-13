@@ -47,7 +47,7 @@ BlockChain.new(:foo, :bar, :baz, :qux).call(self) { yield }
 
 With the last form, the argument given to `call` is the receiver of the methods.
 
-This can make deeply-nested block wrappings a bit more digestable.
+This can make deeply-nested block wrappings a bit more digestable. For more details, read the specs, they’re short and descriptive.
 
 ## Contributing
 
