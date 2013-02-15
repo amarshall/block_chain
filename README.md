@@ -40,12 +40,13 @@ BlockChain.new(*methods).call { yield }
 ```
 
 or even this:
+
 ```ruby
 require 'block_chain'
 BlockChain.new(:foo, :bar, :baz, :qux).call(self) { yield }
 ```
 
-With the last form, the argument given to `call` is the receiver of the methods.
+With the last form, the argument given to `call` is the receiver of the methods (since the receiver cannot be implicit, it must be explicitly specified. Also note that this form does not work in JRuby or Rubinius due to a bug. A gap in RubySpec was found as a result of this feature, see [RubySpec #174](https://github.com/rubyspec/rubyspec/pull/174).
 
 This can make deeply-nested block wrappings a bit more digestable. For more details, read the specs, they’re short and descriptive.
 
