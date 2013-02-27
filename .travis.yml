@@ -5,3 +5,14 @@ rvm:
   - 2.0.0
   - jruby-19mode
   - rbx-19mode
+matrix:
+  include:
+    - rvm: jruby-19mode
+      env: WITH_RUBY_BUGS=true
+    - rvm: rbx-19mode
+      env: WITH_RUBY_BUGS=true
+  allow_failures:
+    - rvm: jruby-19mode
+      env: WITH_RUBY_BUGS=true
+    - rvm: rbx-19mode
+      env: WITH_RUBY_BUGS=true

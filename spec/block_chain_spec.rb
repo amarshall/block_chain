@@ -21,28 +21,30 @@ describe BlockChain do
     block_chain.call(42) { 'x' }.should == 'f(42g(42h(42x)))'
   end
 
-  it "accepts methods passed as a symbol, calling them on the object passed to call" do
-    def f; "f(#{yield})"; end
-    def g; "g(#{yield})"; end
-    def h; "h(#{yield})"; end
-
-    block_chain = BlockChain.new :f, :g, :h
-
-    block_chain.call(self) { 'x' }.should == 'f(g(h(x)))'
-  end
-
-  it "cannot call private methods when passing a symbol" do
-    klass = Class.new do
+  context "on MRI Ruby only", jruby_bug: true, rbx_bug: true do
+    it "accepts methods passed as a symbol, calling them on the object passed to call" do
       def f; "f(#{yield})"; end
       def g; "g(#{yield})"; end
       def h; "h(#{yield})"; end
-      private :f, :g, :h
-    end
-    block_chain = BlockChain.new :f, :g, :h
 
-    -> do
-      block_chain.call(klass.new) { 'x' }
-    end.should raise_error(NoMethodError, /private method/)
+      block_chain = BlockChain.new :f, :g, :h
+
+      block_chain.call(self) { 'x' }.should == 'f(g(h(x)))'
+    end
+
+    it "cannot call private methods when passing a symbol" do
+      klass = Class.new do
+        def f; "f(#{yield})"; end
+        def g; "g(#{yield})"; end
+        def h; "h(#{yield})"; end
+        private :f, :g, :h
+      end
+      block_chain = BlockChain.new :f, :g, :h
+
+      -> do
+        block_chain.call(klass.new) { 'x' }
+      end.should raise_error(NoMethodError, /private method/)
+    end
   end
 
   it "can call private methods when passing a method" do
