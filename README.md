@@ -1,6 +1,6 @@
 # BlockChain
 
-[![Build Status](https://secure.travis-ci.org/amarshall/block_chain.png)](http://travis-ci.org/amarshall/block_chain)
+[![Build Status](https://secure.travis-ci.org/amarshall/block_chain.png?branch=master)](http://travis-ci.org/amarshall/block_chain)
 
 Makes it easy to chain nested blocks together without creating a ton of nesting.
 
